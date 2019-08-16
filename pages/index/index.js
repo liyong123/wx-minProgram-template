@@ -1,29 +1,22 @@
 //index.js
-//获取应用实例
+//获取应用实例，家长首页
+import { pages } from '../../utils/tabbarContent.js'
 const app = getApp()
 
 Page({
   data: {
-  
+     pagesMenu: []
   },
   onLoad: function () {
-    this.getUserLocation();
-    wx.navigateTo({
-      url: '/pages/login/login',
+    const userRole = wx.getStorageSync("userRole") || '0';//获取用户角色，决定显示哪个tabbar
+    this.setData({
+      pagesMenu: pages[userRole * 1]
     })
   },
-  getUserLocation: function () {
-    var that = this;
-    wx.getLocation({
-      type: "wgs84",
-      success: function (t) {
-        var e = t.latitude, a = t.longitude;
-        t.speed, t.accuracy;
-        console.log(e), console.log(a);
-        var n = a + "," + e;
-        
-      }
-    });
+  onShow: function(){
+   
   },
+
+ 
  
 })

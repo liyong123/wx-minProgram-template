@@ -2,7 +2,7 @@
 @import "/utils/common.wxss";
 
 page {
-  background: #f7f7f7;
+  background: #fff;
 }
 
 .common-header-xian {

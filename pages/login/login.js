@@ -1,8 +1,8 @@
 const App = getApp();
 
 // 工具类
-// const util = require('../../utils/util.js');
-
+const _http = require('../../utils/request.js');
+const loginUrl = App.globalData.serverUrl + App.globalData.loginUrl;
 Page({
 
   /**
@@ -42,27 +42,42 @@ Page({
       title: "正在登录",
       mask: true
     });
+    console.log("e:",e.detail.userInfo);
     // 执行微信登录
     wx.login({
       success: function (res) {
-        _this.navigateBack();
-        // // 发送用户信息
-        // App._post_form('user/login', {
-        //   code: res.code,
-        //   user_info: e.detail.rawData,
-        //   encrypted_data: e.detail.encryptedData,
-        //   iv: e.detail.iv,
-        //   signature: e.detail.signature,
-        //   referee_id: wx.getStorageSync('referee_id')
-        // }, function (result) {
-        //   // 记录token user_id
-        //   wx.setStorageSync('token', result.data.token);
-        //   wx.setStorageSync('user_id', result.data.user_id);
-        //   // 跳转回原页面
-        //   _this.navigateBack();
-        // }, false, function () {
-        //   wx.hideLoading();
-        // });
+         const params = {
+           //todo:e中的用户个人信息
+         }
+        // _http.requestPost({
+        //   url: loginUrl,
+        //   data: params,
+        //   success: res => {
+        //    //todo:登录成功，保存token到storage
+        //    // const token = res.token;
+        //    // wx.setStorageSync("token", token)
+        //     wx.showToast({
+        //       title: "登录成功",
+        //       icon: 'none',
+        //       duration: 2000
+        //     });
+        //     wx.switchTab({
+        //       url: "/pages/index/index"
+        //     })
+        //     wx.hideLoading();
+        //   }
+        // })
+        //临时模拟各种情况：
+        wx.hideLoading();
+        wx.setStorageSync("token", "ssssssss");
+        wx.setStorageSync("userRole", "0");
+
+
+        wx.navigateTo({
+          url:  "/pages/temporary/index",
+        })
+       
+        
       }
     });
   },
