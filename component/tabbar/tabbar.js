@@ -9,6 +9,9 @@ Component({
       value: []
     }
   },
+  options: {
+    addGlobalClass: true,
+  },
 
   ready() {
     

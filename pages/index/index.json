@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "首页",
   "usingComponents": {
-     "tab-bar": "../../component/tabbar/tabbar"
+     "tab-bar": "../../component/tabbar/tabbar",
+     "diy-search": "../../component/search/search",
+     "diy-banner": "../../component/banner/banner",
+     "diy-swiperV": "../../component/swiperV/swiperV"
   }
 }
