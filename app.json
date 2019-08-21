@@ -1,10 +1,12 @@
 {
   "pages": [
+      "pages/echarts/index",
     "pages/temporary/index",
     "pages/index/index",
     "pages/index/expert/index",
     "pages/user/index",
     "pages/login/login"
+  
   ],
   "window": {
     "navigationBarBackgroundColor": "#4169E1",
@@ -17,6 +19,5 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  
   "sitemapLocation": "sitemap.json"
 }

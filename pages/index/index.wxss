@@ -19,3 +19,9 @@
 .usermotto {
   margin-top: 200px;
 }
+
+.diy-component{
+  margin: 20rpx ;
+  color: red;
+  font-size: 28rpx
+}

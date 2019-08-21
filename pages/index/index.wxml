@@ -1,7 +1,12 @@
 <!--index.wxml-->
 <view class="container">
+   <view class='diy-component'>search组件：</view>
    <diy-search placeholder="请输入关键字" ></diy-search> 
+   <view class='diy-component'>banner组件：</view>
    <diy-banner dataList="{{bannerData}}"></diy-banner>
+   <view class='diy-component'>swiper垂直组件：</view>
    <diy-swiperV msgList="{{msgList}}"></diy-swiperV>
+   <view class='diy-component'>地图组件，请点击：<navigator style="color:blue" url='/pages/echarts/index'>地图</navigator> </view>
 </view>
+
 <tab-bar pagesMenu = '{{pagesMenu}}'></tab-bar> 

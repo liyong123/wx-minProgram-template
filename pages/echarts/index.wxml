@@ -1,0 +1,81 @@
+<!--pages/echarts/index.wxml-->
+<view class='topBkg'>
+    <view class='tabContent'>
+      <view class='yearGrp'>
+        <view bindtap='chooseYearEvent'>
+          <text class='iconfont iconarrow- showYearText' wx:if="{{!yearBoardShow}}"></text>
+          <text class='iconfont iconarrow-1 showYearText showYearText2'  wx:if="{{yearBoardShow}}" ></text>
+          <text>{{currentYear}}</text>
+        </view>
+        <view class='yearGrpBoard' wx:if="{{yearBoardShow}}">
+            <view class='yearGrpTitle'>
+               <text style='margin-right:10rpx' class='iconfont iconroll'></text>
+               <text>年份切换</text>
+            </view>
+            <view class='yearGrpSelected'>
+               <view wx:for="{{yearGrps}}" wx:key="yearGrps" class='{{currentYear == item.year ? "selectedYear" :""}}'  bindtap='clickYearEvent' data-yearIndex="{{item.year}}">
+                 {{item.year}}
+               </view>
+            </view>
+        </view>
+      </view>
+      <view wx:for="{{cityTabDatas}}" class='{{currentTab == index ? "choosedTab" :"choosedTab2"}}' data-cityTab="{{index}}" wx:key="tabUniqueCity" bindtap='tabChange'>
+        <text>{{item.title}}</text>
+      </view>
+    </view>
+</view>
+
+<view class='mainContent' wx:if="{{currentTab==0 || currentTab==1}}" style='height:{{mainContentHight}}' bindtouchstart='{{boardShow ? "hideMapBoardModal":"hideMapBoardModal2"}}'>
+    <view class='totalDataContent'>
+        <view class='totalArea2' wx:if="{{currentTab==0}}">
+          <view class='totalNum2'>
+            <text>{{currentYear}}</text>
+            <view><view></view><text>已成交金额</text></view>
+          </view>
+          <view class='totalImg'>
+            <image src='http://qdrc.jfh.com/qingdao/webchat/img/undraw_1.png' />
+          </view>
+      </view>
+      <view class='stateGrp2' wx:if="{{currentTab==0}}">
+          <view>
+            <text>{{alreadyDeal}}</text>
+            <text>元</text>
+          </view>
+      </view>
+      <view class='totalArea' wx:if="{{currentTab==1}}">
+          <view class='totalImg' style='margin-top:16rpx'>
+            <image src='http://qdrc.jfh.com/qingdao/webchat/img/undraw_2.png'/>
+          </view>
+          <view class='totalNum'>
+            <text>总建设项目数(个)</text>
+            <text>{{totalBuild}}</text>
+          </view>
+      </view>
+      <view class='stateGrp' wx:if="{{currentTab==1}}">
+          <view>
+            <text>建设中(个)</text>
+            <text>{{buildIn}}</text>
+          </view>
+          <view>
+            <text>已验收(个)</text>
+            <text>{{alreadyPass}}</text>
+          </view>
+      </view>
+    </view>
+    <view class='mapContent' style='top:{{mapContentTop}}'>
+      <view class="mapContainer">
+          <ec-canvas id="mychart-dom-area" canvas-id="mychart-area" ec="{{ ec }}"></ec-canvas>
+      </view>
+      <!-- <view class='eachAreaData'>
+          <view class='areaTitle'>
+            <text>{{currentTab == 0 ? "南京市各区域采购数据" : "南京市各区域建设数据"}} </text>
+            <text>NANJING MAP</text>
+          </view>
+          <view class='eachAreaAll'>
+            <view wx:for="{{eachAreaDatas}}" class='eachArea {{ currentArea == index ? "choosedArea" :""}}' data-areaTab="{{index}}" wx:key="areaTabUnique" bindtap='areaTabChange'>
+              <text>{{item.name}}</text>
+            </view>
+          </view>
+      </view> -->
+    </view>
+  </view>
