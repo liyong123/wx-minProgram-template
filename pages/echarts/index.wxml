@@ -66,7 +66,7 @@
       <view class="mapContainer">
           <ec-canvas id="mychart-dom-area" canvas-id="mychart-area" ec="{{ ec }}"></ec-canvas>
       </view>
-      <!-- <view class='eachAreaData'>
+      <view class='eachAreaData'>
           <view class='areaTitle'>
             <text>{{currentTab == 0 ? "南京市各区域采购数据" : "南京市各区域建设数据"}} </text>
             <text>NANJING MAP</text>
@@ -76,6 +76,36 @@
               <text>{{item.name}}</text>
             </view>
           </view>
-      </view> -->
+      </view>
     </view>
   </view>
+
+
+  <cover-view class='dataBoard' wx:if="{{boardShow}}" style='left:{{boardPositionLeft}};top:{{boardPositionTop}}'>
+    <cover-view class='arrowGrp'>
+        <!-- <cover-view class='boardArrow' wx:if="{{boardArrowShow}}"></cover-view>
+        <cover-view class='boardArrowBottom' wx:if="{{boardArrowBottomShow}}"></cover-view> -->
+        <cover-image class='boardArrow' src="../../image/boardArrow.png" wx:if="{{boardArrowShow}}"></cover-image>
+        <cover-image class='boardArrowBottom' src="../../image/boardArrow.png" wx:if="{{boardArrowBottomShow}}"></cover-image>
+    </cover-view>
+    <cover-view class='boardContent'>
+        <cover-view class='boardMainContent'>
+          <cover-view class='boardTitle'>
+            {{boardAreaName}}
+          </cover-view>
+          <cover-view class='numGrp'> 
+            {{purchaseNum}}
+          </cover-view>
+          <cover-view class="dataName">{{currentTab == 0 ? "采购单位数量" : "总建设项目数"}}</cover-view>
+          <cover-view class="numGrp">
+            <cover-view wx:if="{{currentTab == 0 ? true : false}}">{{dealMoney}}</cover-view>
+            <cover-view style='margin:0 6rpx;color:#666' wx:if="{{currentTab == 0 ? true : false}}">|</cover-view>
+            <cover-view>{{proportion}}</cover-view>
+          </cover-view>
+          <cover-view class="dataName">{{currentTab == 0 ? "已成交金额 | 全市占比" : "总建设项目数全市占比"}}</cover-view>
+          <cover-view class='closeBtn' bindtap='coloseBoard'>
+            <cover-view>查看详情</cover-view>  
+          </cover-view>
+        </cover-view>
+    </cover-view>
+  </cover-view> 

@@ -243,6 +243,7 @@
   position: absolute;
   left:0;
   width: 100%;
+  /* z-index: 1000; */
   margin-top:-300rpx;
 }
 .mapContainer{
@@ -291,4 +292,83 @@
 .choosedArea{
   background: #597FF3;
   color:#fff
+}
+.dataBoard{
+  position: absolute;
+  display: flex;
+  background-color: transparent;
+  flex-direction: row;
+  box-shadow:10rpx 10rpx 20rpx 2rpx #dcdcdc;
+}
+.boardContent{
+  height:396rpx;
+  width:300rpx;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  border-radius: 10rpx;
+  flex-direction: column;
+  border:solid 1rpx #dcdcdc;
+  
+}
+.boardMainContent{
+  display: flex;
+  flex-direction: column;
+  padding:30rpx 20rpx
+}
+.boardTitle{
+  display: flex;
+  color:#464A55;
+  font-size:26rpx;
+  padding-bottom:30rpx;
+  font-weight:bold;
+  border-bottom:dotted 4rpx #dcdcdc;
+  margin-bottom:20rpx;
+}
+.numGrp{
+  font-size: 26rpx;
+  color: #D48D18;
+  padding-bottom:8rpx;
+  display: flex;
+  flex-direction: row
+}
+.dataName{
+  font-size: 24rpx;
+  color: #666666;
+  padding-bottom:26rpx;
+}
+.closeBtn{
+  padding-top:30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.closeBtn cover-view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 122rpx;
+  height:36rpx;
+  line-height: 34rpx;
+  background: #597FF3;
+  color:#fff;
+  font-size:20rpx;
+  text-align: center;
+  border-radius: 18rpx;
+}
+.arrowGrp{
+  display: flex;
+  flex-direction: column
+}
+.boardArrow{
+  width:18rpx;
+  height:16rpx;
+  margin-top:50rpx;
+  margin-right:4rpx;
+}
+.boardArrowBottom{
+  width:18rpx;
+  height:16rpx;
+  margin-top:340rpx;
+  margin-right:4rpx;
 }
