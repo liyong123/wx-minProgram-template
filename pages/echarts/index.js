@@ -126,6 +126,155 @@ function initChart(canvas, width, height) {
   return chart;
 }
 
+var chartBar = null;
+var optionBar = {
+
+  tooltip: {
+    trigger: 'item',
+
+  },
+  grid: [{
+    left: 0,
+    right: 0,
+    top: '5%',
+    bottom: '8%',
+    containLabel: true,
+  }],
+  dataset:{
+    source: [
+      ['<100', 43],
+      ['100~200', 83],
+      ['200~300', 86],
+      ['>300', 72]
+    ]
+  },
+
+  xAxis: {
+    type: 'category',
+    axisLine: {
+      lineStyle: {
+        color: '#e9ebee',
+      }
+    },
+    axisLabel: {
+      color: '#839ef2',
+      interval: 0,
+    }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+  },
+  series: [{
+    type: 'bar',
+    label: {
+      show: true,
+      position: 'insideTop',
+      color: 'white',
+    },
+    itemStyle: {
+      color: '#839ef2',
+      barBorderRadius: 8,
+    }
+  }],
+
+  animationType: 'scale',
+  animationEasing: 'elasticOut',
+  animationDelay: function (idx) {
+    return Math.random() * 200;
+  }
+};
+
+function initChartBar(canvas, width, height) {
+  chartBar = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(chartBar);
+  chartBar.setOption(optionBar);
+  return chartBar;
+}
+
+//饼图
+var chartPie = null;
+var optionPie = {
+  color: ['#ffe066', '#f25f5c', '#247ba0', '#70c1b3', '#50514f', '#f4f1de', '#e07a5f', '#3d405b', '#81b29a', '#f2cc8f'],
+  title: {
+    left: '6%',
+    top: '10%',
+    textStyle: {
+      color: '#5a5a5a',
+      fontSize: 14,
+    }
+  },
+  // tooltip: {
+  //   trigger: 'item',
+  //   formatter: "{a} <br/>{b} : {c} ({d}%)"
+  // },
+
+  series: [{
+    type: 'pie',
+    radius: ['40%', '60%'],
+    center: ['50%', '50%'],
+    data: [
+      { value: 335, name: '直接访问' },
+      { value: 310, name: '邮件营销' },
+      { value: 274, name: '联盟广告' },
+      { value: 235, name: '视频广告' },
+      { value: 400, name: '搜索引擎' }
+    ],
+    label: {
+      normal: {
+        fontSize: 14,
+        lineHeight: 14,
+        formatter: '{count|{c}}{normal|家}\n{d}%\n{name|{b}}',
+        rich: {
+          count: {
+            color: '#5a5a5a',
+            fontSize: 12,
+          },
+          normal: {
+            color: '#999999',
+            fontSize: 12,
+          },
+          name: {
+            color: '#5a5a5a',
+            fontSize: 12,
+          }
+        }
+      }
+    },
+    labelLine: {
+      normal: {
+        smooth: 0.2,
+        length: 10,
+        length2: 20
+      }
+    },
+
+    animationType: 'scale',
+    animationEasing: 'elasticOut',
+    animationDelay: function (idx) {
+      return Math.random() * 200;
+    }
+  }]
+};
+
+function initChartPie(canvas, width, height) {
+  chartPie = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(chartPie);
+  chartPie.setOption(optionPie);
+  return chartPie;
+};
+
 Page({
 
   /**
@@ -159,6 +308,23 @@ Page({
     ec: {
       onInit: initChart
     },
+    ecBar: {
+      onInit: initChartBar,
+    },
+    ecPie: {
+      onInit: initChartPie,
+    },
+    ecPie: {
+      onInit: initChartPie,
+    },
+    totalCount: {
+      allCount: "21",
+      auditCount: "32",
+      govCount: "43"
+    },
+    staffData: [
+      { name: 'sss', count: '223' }
+    ],
     
   },
 
@@ -181,6 +347,10 @@ Page({
    */
   onShow: function () {
     var that = this;
+    //进入页面滚到页面顶部
+    wx.pageScrollTo({
+      scrollTop: 0,
+    });
     that.setData({
       cityTabDatas: [{
         title: "全市总投入"
@@ -284,14 +454,28 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.resetMap()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.resetMap()
+  },
+ 
+  resetMap() {
+    this.setData({
+      currentArea: -1,
+    })
+    //恢复地图
+    var mapDatas = series[0].data;
+    for (var i = 0; i < mapDatas.length; i++) {
+      mapDatas[i].selected = false
+    }
+    chart.setOption({
+      series: series
+    })
   },
 
   /**
@@ -329,51 +513,51 @@ Page({
     that.setData({
       currentYear: e.currentTarget.dataset.yearindex
     })
-    // if (that.data.currentTab == 0 || that.data.currentTab == 1) {
-    //   that.setData({
-    //     boardDatas: [],
-    //     totalMoney: "--",
-    //     totalBuild: "--",
-    //     purchaseIn: "--",
+    if (that.data.currentTab == 0 || that.data.currentTab == 1) {
+      that.setData({
+        boardDatas: [],
+        totalMoney: "--",
+        totalBuild: "--",
+        purchaseIn: "--",
 
-    //     buildIn: "--",
-    //     alreadyDeal: "--",
-    //     alreadyPass: "--",
+        buildIn: "--",
+        alreadyDeal: "--",
+        alreadyPass: "--",
 
-    //     purchaseNum: "--",
-    //     dealMoney: "--",
-    //     proportion: "--",
-    //     boardShow: false,
-    //   });
+        purchaseNum: "--",
+        dealMoney: "--",
+        proportion: "--",
+        boardShow: false,
+      });
 
-    //   // 根据currentTab 值，访问相应的接口
-    //   if (that.data.currentTab == 0) {
-    //     that.getCityLeaderIndexTotalMoneyDatas(that);
-    //     that.getDityLeaderIndexAreaDatas(that);
-    //   } else if (that.data.currentTab == 1) {
-    //     that.getCityLeaderIndexTotalBuildDatas(that);
-    //   } else {
-    //     that.setData({
-    //       boardDatas: []
-    //     })
-    //   }
-    // } else if (that.data.currentTab == 2) {
-    //   that.fetchOverviewData();
-    // }
+      // 根据currentTab 值，访问相应的接口
+      if (that.data.currentTab == 0) {
+        that.getCityLeaderIndexTotalMoneyDatas(that);
+        that.getDityLeaderIndexAreaDatas(that);
+      } else if (that.data.currentTab == 1) {
+        that.getCityLeaderIndexTotalBuildDatas(that);
+      } else {
+        that.setData({
+          boardDatas: []
+        })
+      }
+    } else if (that.data.currentTab == 2) {
+      that.fetchOverviewData();
+    }
   },
   //“全市总投入”...tab切换
   tabChange: function (e) {
     var that = this;
     that.setData({
       currentTab: e.currentTarget.dataset.citytab,
-      //currentArea: -1,
-      //boardShow: false,
+      currentArea: -1,
+      boardShow: false,
     })
     //tab切换恢复地图
-    //this.resetMap();
+    this.resetMap();
     if (that.data.currentTab == 0 || that.data.currentTab == 1) {
       that.setData({
-        //boardDatas: [],
+        boardDatas: [],
         totalMoney: "--",
         totalBuild: "--",
         purchaseIn: "--",
@@ -390,13 +574,13 @@ Page({
       // 根据currentTab 值，访问相应的接口
       if (that.data.currentTab == "0") {
         that.getCityLeaderIndexTotalMoneyDatas(that);
-        //that.getDityLeaderIndexAreaDatas(that);
+        that.getDityLeaderIndexAreaDatas(that);
       } else if (that.data.currentTab == "1") {
         that.getCityLeaderIndexTotalBuildDatas(that);
       } else {
-        // that.setData({
-        //   boardDatas: []
-        // })
+         that.setData({
+           boardDatas: []
+         })
       }
     } else if (that.data.currentTab == 2) {
       //that.fetchOverviewData();
@@ -422,73 +606,97 @@ Page({
         pcount: "12",
         purchase_dea_price: "7867",
         area_pur_dea_per: "30",
-        area_code: "320101"
+        area_code: "320101",
+        total: "43",
+        proportion: "18"
       },
       {
         pcount: "13",
-        purchase_dea_price: "7867",
+        purchase_dea_price: "4532",
         area_pur_dea_per: "30",
-        area_code: "320102"
+        area_code: "320102",
+        total: "33",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "15",
+        purchase_dea_price: "467",
         area_pur_dea_per: "30",
-        area_code: "320104"
+        area_code: "320104",
+        total: "13",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "42",
+        purchase_dea_price: "67",
         area_pur_dea_per: "30",
-        area_code: "320105"
+        area_code: "320105",
+        total: "63",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "17",
+        purchase_dea_price: "7567",
         area_pur_dea_per: "30",
-        area_code: "320106"
+        area_code: "320106",
+        total: "63",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "34",
+        purchase_dea_price: "3333",
         area_pur_dea_per: "30",
-        area_code: "320111"
+        area_code: "320111",
+        total: "83",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "45",
+        purchase_dea_price: "12",
         area_pur_dea_per: "30",
-        area_code: "320113"
+        area_code: "320113",
+        total: "93",
+        proportion: "18"
       },
       {
-        pcount: "12",
-        purchase_dea_price: "7867",
+        pcount: "43",
+        purchase_dea_price: "12",
         area_pur_dea_per: "30",
-        area_code: "320114"
+        area_code: "320114",
+        total: "46",
+        proportion: "18"
       },
       {
-        pcount: "12",
+        pcount: "67",
         purchase_dea_price: "7867",
         area_pur_dea_per: "30",
-        area_code: "320115"
+        area_code: "320115",
+        total: "56",
+        proportion: "18"
       },
       {
-        pcount: "12",
+        pcount: "56",
         purchase_dea_price: "7867",
         area_pur_dea_per: "30",
-        area_code: "320116"
+        area_code: "320116",
+        total: "76",
+        proportion: "18"
       },
       {
-        pcount: "12",
+        pcount: "24",
         purchase_dea_price: "7867",
         area_pur_dea_per: "30",
-        area_code: "320117"
+        area_code: "320117",
+        total: "3",
+        proportion: "18"
       },
       {
-        pcount: "12",
+        pcount: "57",
         purchase_dea_price: "7867",
         area_pur_dea_per: "30",
-        area_code: "320118"
+        area_code: "320118",
+        total: "44",
+        proportion: "18"
       }
     ];
    
@@ -505,6 +713,79 @@ Page({
       buildIn: "80",
       alreadyPass: "20"
     });
+
+
+    let dataTotal = [
+      {
+        area_code: "320101",
+        total: "43",
+        proportion: "18"
+      },
+      {
+        area_code: "320102",
+        total: "33",
+        proportion: "18"
+      },
+      {
+        area_code: "320104",
+        total: "13",
+        proportion: "18"
+      },
+      {
+        area_code: "320105",
+        total: "63",
+        proportion: "18"
+      },
+      {
+        area_code: "320106",
+        total: "63",
+        proportion: "18"
+      },
+      {
+        area_code: "320111",
+        total: "83",
+        proportion: "18"
+      },
+      {
+        area_code: "320113",
+        total: "93",
+        proportion: "18"
+      },
+      {
+        area_code: "320114",
+        total: "46",
+        proportion: "18"
+      },
+      {
+      
+        area_code: "320115",
+        total: "56",
+        proportion: "18"
+      },
+      {
+     
+        area_code: "320116",
+        total: "76",
+        proportion: "18"
+      },
+      {
+     
+        area_code: "320117",
+        total: "3",
+        proportion: "18"
+      },
+      {
+     
+        area_code: "320118",
+        total: "44",
+        proportion: "18"
+      }
+    ];
+
+    that.setData({
+      boardDatas: dataTotal,
+      boardDataReady: true
+    })
   },
 
   //点击屏幕其他位置，面板消失
@@ -513,7 +794,7 @@ Page({
     that.setData({
       boardShow: false
     })
-    //this.resetMap()
+    this.resetMap()
   },
   hideMapBoardModal2: function (e) {
     console.log("e2:", e)
@@ -529,6 +810,7 @@ Page({
     }
   },
   _areaTabChange: function (e) {
+    
     var that = this;
     that.setData({
       currentArea: e.currentTarget.dataset.areatab
@@ -548,7 +830,7 @@ Page({
     chart.setOption({
       series: series
     })
-
+   
     var choosedCode = eachAreaDatas[currentArea].value;
     var choosedName = eachAreaDatas[currentArea].name;
     var choosedNamePinyin = eachAreaDatas[currentArea].namePinyin;
@@ -660,6 +942,7 @@ Page({
         break;
     }
     if (boardDataAll.length > 0) {
+      
       for (let eachData of boardDataAll) {
         if (that.data.currentTab == 0) {
           if (eachData.area_code == choosedCode) {
@@ -677,7 +960,7 @@ Page({
             })
           }
         } else if (that.data.currentTab == 1) {
-          if (eachData.code == choosedCode) {
+          if (eachData.area_code == choosedCode) {
             that.setData({
               purchaseNum: eachData.total && eachData.total != "" ? (eachData.total + "个") : eachData.total === 0 ? "0" : "暂无",
               proportion: eachData.proportion && eachData.proportion != "" ? (eachData.proportion + "%") : eachData.proportion === 0 ? "0%" : "暂无"
@@ -698,6 +981,25 @@ Page({
         proportion: "暂无"
       })
     }
+  },
 
+  coloseBoard: function () {
+    // var that = this;
+    // if (this.data.currentTab == 2) return;
+    // var index = that.data.currentArea; //选中的区
+    // var currentTab = that.data.currentTab; //头部tab值
+    // var currentYear = that.data.currentYear;
+    // if (index == -1) {
+    //   index = 0
+    // }
+    // if (that.data.currentTab == 0 || that.data.currentTab == 1) {
+    //   wx.navigateTo({
+    //     url: './cityLeaderArea?index=' + index + "&currentTab=" + currentTab + "&currentYear=" + currentYear
+    //   })
+    // }
+    // that.setData({
+    //   boardShow: false,
+    //   yearBoardShow: false
+    // })
   },
 })

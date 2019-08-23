@@ -1,11 +1,12 @@
 {
   "pages": [
-      "pages/echarts/index",
+    
     "pages/temporary/index",
     "pages/index/index",
     "pages/index/expert/index",
     "pages/user/index",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/echarts/index"
   
   ],
   "window": {

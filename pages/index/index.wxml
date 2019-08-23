@@ -6,7 +6,7 @@
    <diy-banner dataList="{{bannerData}}"></diy-banner>
    <view class='diy-component'>swiper垂直组件：</view>
    <diy-swiperV msgList="{{msgList}}"></diy-swiperV>
-   <view class='diy-component'>地图组件，请点击：<navigator style="color:blue" url='/pages/echarts/index'>地图</navigator> </view>
+   <view class='diy-component'>echarts 组件，请点击：<navigator style="color:blue" url='/pages/echarts/index'>地图、饼图、柱状图等</navigator> </view>
 </view>
 
 <tab-bar pagesMenu = '{{pagesMenu}}'></tab-bar> 
