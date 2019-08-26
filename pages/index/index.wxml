@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" style='margin-bottom:100rpx'>
    <view class='diy-component'>search组件：</view>
    <diy-search placeholder="请输入关键字" ></diy-search> 
    <view class='diy-component'>banner组件：</view>
@@ -7,6 +7,17 @@
    <view class='diy-component'>swiper垂直组件：</view>
    <diy-swiperV msgList="{{msgList}}"></diy-swiperV>
    <view class='diy-component'>echarts 组件，请点击：<navigator style="color:blue" url='/pages/echarts/index'>地图、饼图、柱状图等</navigator> </view>
+   <view class='diy-component'>tab切组件：</view>
+   <diy-tabqie tabData = "{{tabData}}"></diy-tabqie>
+   <view class='diy-component'>升序降序组件：</view>
+   <diy-ascdes ></diy-ascdes>
+   <view class='diy-component'>列表分页：</view>
+   <view class='diy-component'>
+       <view>参照南京软件服务+小程序（wx-njrjjyfw-）：pages/user/myFocus</view>
+       <view>1、页面触底pageNum +1</view>
+       <view>2、每次加载数据完新数据，要contact到旧数据上</view>
+       <view>3、加载到最后 ，不需要再访问接口，listIsEnd:false</view>
+   </view> 
 </view>
 
 <tab-bar pagesMenu = '{{pagesMenu}}'></tab-bar> 

@@ -1,0 +1,29 @@
+.tabContent{
+  display: flex;
+  flex-direction: row;
+  height: 80rpx;
+  background-color:#f1f1f2;
+  padding: 0 60rpx;
+}
+.tabContent view{
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  color:#9b9b9b;
+  position: relative
+}
+.tabContent view.choosedTab{
+  color:#597ff3
+}
+.tabContent .bottomLine{
+    position: absolute;
+    bottom:8rpx;
+    left:50%;
+    width: 80rpx;
+    height:4rpx;
+    margin-left: -40rpx;
+    background-color: #597FF3;
+    border-radius: 2rpx;
+}

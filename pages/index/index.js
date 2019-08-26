@@ -15,6 +15,10 @@ Page({
       { orderName: 'NJJF-201905206609', id: 1002211},
       { orderName: '线下评标-新版测试02-gc', id: 1002212 }, 
       { orderName: '线下评标版本修改01-gc', id: 1002213 }
+    ],
+    tabData: [
+      { title: "供应商",num: "0" },
+      { title: "专家",num: "0" }
     ]    
     
 

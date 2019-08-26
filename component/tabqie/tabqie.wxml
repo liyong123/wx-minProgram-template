@@ -1,0 +1,9 @@
+<!-- tab切组件 -->
+<view class='tabContent'>
+  <view wx:for="{{tabData}}" class='{{currentTab == index ? "choosedTab" :""}}' data-tab="{{index}}" wx:key="tabUnique" bindtap='tabChange'>
+    <text>{{item.title}}</text>
+    <!-- <text>{{"（"+  item.num + "）"}}</text> -->
+    <text hidden='{{currentTab != index}}' class='bottomLine'></text>
+  </view>
+</view>
+
